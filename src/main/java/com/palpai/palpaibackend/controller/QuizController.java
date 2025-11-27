@@ -1,14 +1,13 @@
 package com.palpai.palpaibackend.controller;
 
 import com.palpai.palpaibackend.model.QuizQuestion;
+import com.palpai.palpaibackend.request.QuizAnswerRequest;
+import com.palpai.palpaibackend.response.QuizAnswerResponse;
+import com.palpai.palpaibackend.response.QuizQuestionResponse;
 import com.palpai.palpaibackend.service.QuizService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/quiz")
@@ -18,8 +17,28 @@ public class QuizController {
 
     private final QuizService quizService;
 
-    @GetMapping
-    public List<QuizQuestion> getQuizQuestions() {
-        return quizService.getAllQuestions();
+    @GetMapping("/first")
+    public ResponseEntity<QuizQuestionResponse> getFirstQuestion() {
+        QuizQuestionResponse response = quizService.getFirstQuestion();
+        if (response == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/next/{currentId}")
+    public ResponseEntity<QuizQuestionResponse> getNextQuestion(@PathVariable Long currentId) {
+        QuizQuestionResponse response = quizService.getNextQuestion(currentId);
+        if (response == null) {
+            return ResponseEntity.noContent().build(); // означає, що питань більше немає
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{questionId}/answer")
+    public QuizAnswerResponse checkAnswer(@PathVariable Long questionId,
+                                          @RequestBody QuizAnswerRequest request) {
+        return quizService.checkAnswer(questionId, request.getSelectedOption());
     }
 }
+
