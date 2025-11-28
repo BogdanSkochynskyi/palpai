@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class QuizAnswerRequest {
-    private String selectedOption; // "A" / "B" / "C" / "D"
+    private String selectedOption;
 }
 

@@ -31,9 +31,6 @@ public class QuizQuestion {
     @Column(name = "option_d", length = 500)
     private String optionD;
 
-    /**
-     * 'A', 'B', 'C' or 'D'
-     */
     @Column(name = "correct_option", length = 1)
     private String correctOption;
 }

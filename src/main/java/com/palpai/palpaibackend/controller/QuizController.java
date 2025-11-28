@@ -1,6 +1,5 @@
 package com.palpai.palpaibackend.controller;
 
-import com.palpai.palpaibackend.model.QuizQuestion;
 import com.palpai.palpaibackend.request.QuizAnswerRequest;
 import com.palpai.palpaibackend.response.QuizAnswerResponse;
 import com.palpai.palpaibackend.response.QuizQuestionResponse;
@@ -30,7 +29,7 @@ public class QuizController {
     public ResponseEntity<QuizQuestionResponse> getNextQuestion(@PathVariable Long currentId) {
         QuizQuestionResponse response = quizService.getNextQuestion(currentId);
         if (response == null) {
-            return ResponseEntity.noContent().build(); // означає, що питань більше немає
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(response);
     }
