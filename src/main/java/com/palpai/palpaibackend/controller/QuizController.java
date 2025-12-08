@@ -34,7 +34,7 @@ public class QuizController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{questionId}/answer")
+    @PostMapping("/answer/{questionId}")
     public QuizAnswerResponse checkAnswer(@PathVariable Long questionId,
                                           @RequestBody QuizAnswerRequest request) {
         return quizService.checkAnswer(questionId, request.getSelectedOption());
